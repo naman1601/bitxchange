@@ -12,6 +12,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const models = require("./models");
+const routes = require("./routes");
+
+const { extractUserMiddleware } = require("./helpers/auth");
 
 const app = express();
 app.use(
@@ -40,13 +43,9 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+app.use(extractUserMiddleware);
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error: "));
+app.use("/api/v1", routes.api);
 
 // 404 handler
 app.use((req, res, next) => {
@@ -63,6 +62,14 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json(response);
 });
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error: "));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
