@@ -44,7 +44,13 @@ const productSchema = new mongoose.Schema({
     validate: (v) => Array.isArray(v) && v.length > 0,
   },
 });
+
+productSchema.virtual("createdAt").get(function () {
+  return this._id.getTimestamp();
+});
+
 productSchema.set("id", false);
+productSchema.set("toJSON", { virtuals: true });
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
