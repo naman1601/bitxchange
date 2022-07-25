@@ -1,14 +1,15 @@
 {
-  "name": "bitxchange",
+  "name": "@bitxchange/server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "app.js",
+  "private": true,
+  "engines": {
+    "node": "16.15.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "start": "node app.js",
+    "serve": "nodemon -r dotenv/config app.js"
+  },
   "dependencies": {
     "async": "^3.2.4",
     "bcryptjs": "^2.4.3",
@@ -21,10 +22,9 @@
     "helmet": "^5.1.0",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "luxon": "^2.4.0",
     "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
-    "validator": "^13.7.0",
+    "nodemailer": "^6.7.7",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
@@ -32,5 +32,6 @@
     "eslint": "^8.18.0",
     "eslint-plugin-node": "^11.1.0",
     "nodemon": "^2.0.16"
-  }
+  },
+  "license": "ISC"
 }
